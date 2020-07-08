@@ -19,11 +19,13 @@
     <h1>{{ message }}</h1>
     <div v-for="person in people">
       <h2>{{ person.name }}</h2>
-      <p>
-        At the time {{ person.name }} turned {{ person.age }}, {{ person.education_level }} was their highest level of
-        education. For details you can reach them at {{ person.phone }}.
-      </p>
-      <button v-on:click="show"
+      <button v-on:click="currentPerson = person">details</button>
+      <div v-if="person === currentPerson">
+        <p>
+          At the time {{ person.name }} turned {{ person.age }}, {{ person.education_level }} was their highest level of
+          education. For details you can reach them at {{ person.phone }}.
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -40,7 +42,8 @@ export default {
       newPersonName: "",
       newPersonAge: "",
       newPersonPhoneNumber: "",
-      newPersonEducationLevel: ""
+      newPersonEducationLevel: "",
+      currentPerson: {}
     };
   },
   created: function() {
