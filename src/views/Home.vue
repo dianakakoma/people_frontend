@@ -25,6 +25,19 @@
           At the time {{ person.name }} turned {{ person.age }}, {{ person.education_level }} was their highest level of
           education. For details you can reach them at {{ person.phone }}.
         </p>
+        <div v-if="currentPerson === person">
+          <div>
+            Name:
+            <input type="text" v-model="person.name" />
+            Age:
+            <input type="number" v-model="person.age" />
+            Education Level:
+            <input type="text" v-model="person.education_level" />
+            Phone:
+            <input type="text" v-model="person.phone" />
+            <button v-on:click="updatePerson(person)">Update Person</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -65,6 +78,17 @@ export default {
         this.newPersonAge = "";
         this.newPersonEducationLevel = "";
         this.newPersonPhoneNumber = "";
+      });
+    },
+    updatePerson: function(person) {
+      var params = {
+        name: person.name,
+        age: person.age,
+        education_level: person.education_level,
+        phone: person.phone
+      };
+      axios.patch("/api/people/" + person.id, params).then((response) => {
+        this.currentPerson = {};
       });
     }
   }
